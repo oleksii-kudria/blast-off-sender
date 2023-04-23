@@ -1,0 +1,28 @@
+# Distribution / packaging
+__pycache__
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Terraform
+.terraform
+.terragrunt-cache
+*.tfstate*
+.terraform.lock.hcl
+crash.log
+
+# Lambda builds by Terraform AWS Lambda module
+builds/
