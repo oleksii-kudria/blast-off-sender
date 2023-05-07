@@ -52,3 +52,9 @@ module "lambda" {
     }
   }
 }
+
+module "s3" {
+    source = "./modules/S3"
+        bucket_name = "blast-off-sender-bucket"
+
+}               
