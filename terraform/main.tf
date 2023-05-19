@@ -1,3 +1,12 @@
+# terraform {
+#   required_providers {
+#     aws = {
+#       source  = "hashicorp/aws"
+#       version = "3.74.0"
+#     }
+#   }
+# }
+
 provider "aws" {
   region              = var.aws_region
   allowed_account_ids = var.allowed_account_ids
@@ -53,8 +62,12 @@ module "lambda" {
   }
 }
 
-module "s3" {
-    source = "./modules/S3"
-        bucket_name = "blast-off-sender-bucket"
+resource "aws_s3_bucket" "example" {
+  bucket = "blast-off-sender"
 
-}               
+  tags = {
+    Name        = "blast-off-sender-bucket"
+    Environment = "Dev"
+  }
+}
+
