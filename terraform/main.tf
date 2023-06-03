@@ -100,45 +100,5 @@ resource "aws_iam_role_policy_attachment" "lambda_ro_accsess_to_s3" {
   policy_arn = aws_iam_policy.lambda_ro_accsess_to_s3.arn
 }
 
-# resource "aws_iam_role" "lambda" {
-#   name = "${var.name}-lambda"
 
-#   assume_role_policy = jsonencode({
-#     Version: 2012-10-17,
-#     Statement: [
-#         {
-#           "Effect": "Allow",
-#           "Principal": {
-#               "Service": "lambda.amazonaws.com"
-#           },
-#           "Action": "sts:AssumeRole"
-#         }
-#       ]
-#   })
-# }
-
-# resource "aws_iam_role" "blast-off-sender" {
-#   name = "blast-off-sender"
-
-#   assume_role_policy = jsonencode({
-#     Version: 2012-10-17,
-#     Statement: [
-#         {
-#             Effect: "Allow",
-#             Action: [
-#                 "s3:Get*",
-#                 "s3:List*",
-#                 "s3-object-lambda:Get*",
-#                 "s3-object-lambda:List*"
-#             ],
-#             Resource: "arn:aws:s3:::blast-off-sender"
-#         }
-#       ]
-#   })
-# }
-
-# resource "aws_iam_role_policy_attachment" "lambda_s3" {
-#   role       = aws_iam_role.blast-off-sender.name
-#   policy_arn = aws_iam_policy.lambda_logging.arn
-# }
 
