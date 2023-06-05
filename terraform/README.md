@@ -1,7 +1,6 @@
 # blast-off-sender Terraform
 
 - Lambda Function
-- S3 bucket for downloads
 - Amazon EventBridge
 
 ## Deployments
@@ -23,7 +22,7 @@
 | Name | Source | Version |
 |------|--------|---------|
 | <a name="module_lambda"></a> [lambda](#module\_lambda) | terraform-aws-modules/lambda/aws | ~> 2.0 |
-| <a name="module_records"></a> [records](#module\_eventbridge) | terraform-aws-modules/eventbridge/aws | ~> 2.0 |
+| <a name="module_eventbridge"></a> [records](#module\_eventbridge) | terraform-aws-modules/eventbridge/aws | ~> 2.0 |
 
 ## Resources
 
