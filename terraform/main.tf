@@ -38,7 +38,11 @@ module "lambda" {
 
   function_name = "${var.name}-lambda"
   handler       = "handler.handler"
-  runtime       = "python3.8"
+  runtime       = "python3.10"
+
+  environment_variables = {
+    BUCKET = "${var.name}-s3"
+  }
 
   source_path = "../src/sender"
 
@@ -51,4 +55,38 @@ module "lambda" {
       source_arn = module.eventbridge.eventbridge_rule_arns["crons"]
     }
   }
+}
+
+
+resource "aws_s3_bucket" "example" {
+  bucket = "${var.name}-s3"
+
+  tags = {
+    Name = "blast-off-sender-s3"
+  }
+}
+
+data "aws_iam_policy_document" "lambda_ro_accsess_to_s3" {
+  statement {
+    effect = "Allow"
+
+    actions = [
+      "s3:Get*",
+      "s3:List*",
+      "s3-object-lambda:Get*",
+      "s3-object-lambda:List*"
+    ]
+
+    resources = ["arn:aws:s3:::${var.name}-s3/*"]
+  }
+}
+
+resource "aws_iam_policy" "lambda_ro_accsess_to_s3" {
+  name = "lambda_ro_accsess_to_s3"
+  policy = data.aws_iam_policy_document.lambda_ro_accsess_to_s3.json
+}
+
+resource "aws_iam_role_policy_attachment" "lambda_ro_accsess_to_s3" {
+  role = "${var.name}-lambda"
+  policy_arn = aws_iam_policy.lambda_ro_accsess_to_s3.arn
 }
