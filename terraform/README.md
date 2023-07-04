@@ -27,6 +27,10 @@
 
 ## Resources
 
+| Resource | Description|
+|------|---------|
+| <a name="aws_s3_bucket"></a> [S3 bucket] | Provides a S3 bucket resource |
+
 ## Inputs
 
 | Name | Description | Type | Default | Required |

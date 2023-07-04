@@ -1,12 +1,3 @@
-# terraform {
-#   required_providers {
-#     aws = {
-#       source  = "hashicorp/aws"
-#       version = "3.74.0"
-#     }
-#   }
-# }
-
 provider "aws" {
   region              = var.aws_region
   allowed_account_ids = var.allowed_account_ids
@@ -99,6 +90,3 @@ resource "aws_iam_role_policy_attachment" "lambda_ro_accsess_to_s3" {
   role = "${var.name}-lambda"
   policy_arn = aws_iam_policy.lambda_ro_accsess_to_s3.arn
 }
-
-
-
