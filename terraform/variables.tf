@@ -6,7 +6,7 @@ variable "allowed_account_ids" {
 variable "aws_region" {
   description = "AWS region where infrastructure will be created"
   type        = string
-  default     = "eu-central-1"
+  default     = "us-east-1"
 }
 
 variable "name" {
