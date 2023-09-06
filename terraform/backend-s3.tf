@@ -11,7 +11,7 @@
 
 terraform {
   backend "s3" {
-    bucket = "blast-off-sender-s3"
+    bucket = "blast-off-terraformstate"
     key = "global/s3/terraform.tfstate"
     region = var.aws_region
     # dynamodb_table = "terraform-blast-off-sender"
