@@ -56,3 +56,19 @@ module "lambda" {
     }
   }
 }
+
+resource "aws_dynamodb_table" "blast-dynamodb" {
+  name             = "blast-dynamodb"
+  hash_key         = "ID"
+  billing_mode     = "PAY_PER_REQUEST"
+  stream_enabled   = true
+  
+  attribute {
+    name = "ID"
+    type = "S"
+  }
+
+   lifecycle {
+    prevent_destroy = true
+  }
+}  
