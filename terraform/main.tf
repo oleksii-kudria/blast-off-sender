@@ -57,57 +57,43 @@ module "lambda" {
   }
 }
 
+resource "aws_dynamodb_table" "blast-dynamodb" {
+  name             = "blast-dynamodb"
+  hash_key         = "ID"
+  billing_mode     = "PAY_PER_REQUEST"
 
-resource "aws_s3_bucket" "example" {
-  bucket = "${var.name}-s3"
-
-  tags = {
-    Name = "blast-off-sender-s3"
+  attribute {
+    name = "ID"
+    type = "S"
   }
+
+  #  lifecycle {
+  #   prevent_destroy = true
+  # }
 }
 
-data "aws_iam_policy_document" "lambda_ro_accsess_to_s3" {
+data "aws_iam_policy_document" "lambda_ro_accsess_to_dynamodb" {
   statement {
     effect = "Allow"
 
     actions = [
-      "s3:Get*",
-      "s3:List*",
-      "s3-object-lambda:Get*",
-      "s3-object-lambda:List*"
+      "dynamodb:GetItem",
+      "dynamodb:BatchGetItem",
+      "dynamodb:Scan",
+      "dynamodb:Query",
+      "dynamodb:ConditionCheckItem"
     ]
 
-    resources = ["arn:aws:s3:::${var.name}-s3/*"]
+    resources = [aws_dynamodb_table.blast-dynamodb.arn]
   }
 }
 
-resource "aws_iam_policy" "lambda_ro_accsess_to_s3" {
-  name = "lambda_ro_accsess_to_s3"
-  policy = data.aws_iam_policy_document.lambda_ro_accsess_to_s3.json
+resource "aws_iam_policy" "lambda_ro_accsess_to_dynamodb" {
+  name = "lambda_ro_accsess_to_dynamodb"
+  policy = data.aws_iam_policy_document.lambda_ro_accsess_to_dynamodb.json
 }
 
-resource "aws_iam_role_policy_attachment" "lambda_ro_accsess_to_s3" {
+resource "aws_iam_role_policy_attachment" "lambda_ro_accsess_to_dynamodb" {
   role = "${var.name}-lambda"
-  policy_arn = aws_iam_policy.lambda_ro_accsess_to_s3.arn
-}
-
-resource "aws_dynamodb_table" "terraform_locks" {
-  name = "terraform-blast-off-sender"
-  billing_mode = "PAY_PER_REQUEST"
-  hash_key = "LockID"
-
-  attribute {
-    name = "LockID"
-    type = "S"
-  }
-}
-
-terraform {
-  backend "s3" {
-    bucket = "blast-off-sender-s3"
-    key = "global/s3/terraform.tfstate"
-    region = "us-east-1"
-    dynamodb_table = "terraform-blast-off-sender"
-    encrypt = true
-  }
+  policy_arn = aws_iam_policy.lambda_ro_accsess_to_dynamodb.arn
 }
