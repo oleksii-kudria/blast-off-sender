@@ -1,8 +1,9 @@
 # blast-off-sender Terraform
 
 - Lambda Function
-- S3 bucket for downloads
+- Aws_dynamodb for downloads
 - Amazon EventBridge
+- S3 bucket for terraform state
 
 ## Deployments
 
@@ -29,7 +30,7 @@
 
 | Resource | Description|
 |------|---------|
-| <a name="aws_s3_bucket"></a> [aws_s3_bucket](#resource\_aws_s3_bucket) | Provides a S3 bucket resource |
+| <a name="dynamodb_table"></a> [aws_dynamodb_table](#resource\_aws_dynamodb_table) | Provides a dynamodb resource |
 
 ## Inputs
 
